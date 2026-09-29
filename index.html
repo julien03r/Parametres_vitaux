@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche médicale</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #fff; font-family: system-ui, Arial, sans-serif; }
+  body { display: flex; align-items: center; justify-content: center; }
+  #stage { position: relative; display: inline-block; }
+  #corps { display: block; max-width: 100vw; max-height: 100vh; -webkit-user-drag: none; user-select: none; }
+  .zone { position: absolute; cursor: pointer; }
+  #bulle { position: fixed; z-index: 10; width: max-content; box-sizing: border-box; background: #fffbe6; border: 1px solid #d9c96a; border-radius: 10px; padding: 10px 14px; font-size: 15px; line-height: 1.4; box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+  #bulle[hidden] { display: none; }
+  #bulle.ped { background: #eaf2ff; border-color: #5b8def; }
+  #bulle .r { color: #e02020; }
+  #bulleContenu { white-space: pre-wrap; tab-size: 4; }
+  #entete { display: flex; margin-bottom: 6px; }
+  #entete[hidden] { display: none; margin: 0; }
+  .toggleped { display: inline-flex; cursor: pointer; }
+  .toggleped input { display: none; }
+  .toggleped .rail { width: 38px; height: 21px; background: #cfd6e0; border-radius: 999px; position: relative; transition: background .15s; }
+  .toggleped .rond { position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: left .15s; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
+  .toggleped input:checked + .rail { background: #5b8def; }
+  .toggleped input:checked + .rail .rond { left: 19px; }
+</style>
+</head>
+<body>
+<div id="stage"><img id="corps" src="corps.jpg" alt="Corps humain" draggable="false"></div>
+<div id="bulle" hidden>
+  <div id="entete" hidden>
+    <label class="toggleped" id="toggleped">
+      <input type="checkbox" id="chkped">
+      <span class="rail"><span class="rond">🧑</span></span>
+    </label>
+  </div>
+  <div id="bulleContenu"></div>
+</div>
+<script id="donnees" type="application/json">[{"x":0.6787,"y":0.166,"w":0.232,"h":0.166,"html":"\u003cb>Fréquence cardiaque (BPM):\u003c/b>\u003cbr>\t\t• Bradycardie &lt; 60\u003cbr>\t\t• Tachycardie &gt; 120\u003cbr>\u003cbr>\u003cb>Pression artérielle (mmHg):\u003c/b>\u003cbr>\t\t• 90 &lt; PAS &lt; 140\u003cbr>\t\t• 65 &lt; PAM &lt;90\u003cbr>\t\t• ?? &lt; PAD &lt; 90\u003cbr>\u003cbr>\u003cb>PaO\u003csub>2\u003c/sub> (mmHg):\u003c/b>\u003cbr>\t\t• Hypoxémie &lt; 80\u003cbr>\t\t• Hyperoxémie &gt; 100\u003cbr>\u003cbr>\u003cb>SpO\u003csub>2\u003c/sub> (%):\u003c/b>\u003cbr>\t\t• Désaturation &lt; 94\u003cbr>\u003cbr>\u003cb>Glycémie (g/L):\u003c/b>\u003cbr>\t\t• Hypoglycémie &lt; 0,7\u003cbr>\t\t• Hyperglycémie &gt; 1,4","pediatrie":true,"htmlPed":"\u003cb>Fréquence cardiaque (BPM):\u003c/b>\u003cbr>\u003cb>\t\t\u003c/b>• 1 mois: 110-180\u003cbr>\t\t• 1 an: 100-170\u003cbr>\t\t• 5 ans: 70-140\u003cbr>\t\t• 10 ans: 60-120\u003cbr>\u003cbr>\u003cb>PAS hypotension (mmHg): \u003c/b>\u003cbr>\t\t• 1 mois: &lt; 50\t\t• 1 an: &lt; 70\u003cbr>\t\t• 5 ans: &lt; 75\u003cbr>\t\t• 10 ans: &lt; 80\u003cbr>\u003cbr>\u003cb>PAM hypotension (mmHg):\u003c/b>\u003cbr>\u003cb>\t\t\u003c/b>• 1 mois: &lt; 40\u003cbr>\t\t• 1 an: &lt; 50\u003cbr>\t\t• 5 ans: &lt; 55\u003cbr>\t\t• 10 ans: &lt; 55\u003cbr>\u003cbr>\u003cb>HTA (mmHg):\u003c/b>\u003cbr>\u003cb>\t\t\u003c/b>• PA élevée persistante: &gt; 90\u003csup>e\u003c/sup>\u003cbr>\t\t• HTA: &gt; 95\u003csup>e\u003c/sup>\u003cbr>\t\t• 90\u003csup>e\u003c/sup> = 0,95 x 95\u003csup>e\u003c/sup>\u003cbr>\t\t• 95\u003csup>e\u003c/sup> = \u003cbr>\t\t\t• PAS: 100 + 2 x âge\u003cbr>\t\t\t• PAD: 60 + 2 x âge (1-10 ans) ou 70 + 2 x âge (10-17 ans)"},{"x":0.0914,"y":0.8298,"w":0.2341,"h":0.16,"html":"\u003cb>Diurèse (mL/24):\u003c/b>\u003cbr>\t\t• Anurie &lt; 100\u003cbr>\t\t• Oligurie &lt; 500 (ou 0,5 mL/kg/h)\u003cbr>\t\t• Polyurie &gt; 3000","pediatrie":false,"htmlPed":""},{"x":0.7363,"y":0.5216,"w":0.1958,"h":0.1289,"html":"\u003cb>Sel (g/24h):\u003c/b>\u003cbr>\t\t• Régime hyposodé &lt; 5-6","pediatrie":false,"htmlPed":""},{"x":0.0595,"y":0.1926,"w":0.2086,"h":0.1452,"html":"test","pediatrie":true,"htmlPed":"\u003cb>Fréquence respiratoire (/min):\u003c/b>\u003cbr>\u003cb>\t\t\u003c/b>• 1 mois: 35-60\u003cbr>\t\t• 1 an: 30-50\u003cbr>\t\t• 5 ans: 17-30\u003cbr>\t\t• 10 ans: 14-25"}]</script>
+<script>
+(function () {
+  var zones = JSON.parse(document.getElementById("donnees").textContent || "[]");
+  var stage = document.getElementById("stage");
+  var bulle = document.getElementById("bulle");
+  var entete = document.getElementById("entete");
+  var contenu = document.getElementById("bulleContenu");
+  var toggle = document.getElementById("toggleped");
+  var chk = document.getElementById("chkped");
+  var rond = toggle.querySelector(".rond");
+
+  zones.forEach(function (z, i) {
+    var d = document.createElement("div");
+    d.className = "zone";
+    d.dataset.i = i;
+    d.style.left = (z.x * 100) + "%";
+    d.style.top = (z.y * 100) + "%";
+    d.style.width = (z.w * 100) + "%";
+    d.style.height = (z.h * 100) + "%";
+    stage.appendChild(d);
+  });
+
+  var indexOuvert = -1;
+  var pedActif = false;
+  var posFige = null; // { r, marge, aGauche, top } - géométrie figée à l'ouverture
+
+  function fermer() { bulle.hidden = true; indexOuvert = -1; pedActif = false; posFige = null; }
+
+  function rendre() {
+    var z = zones[indexOuvert];
+    var estPed = pedActif && z.pediatrie;
+    bulle.classList.toggle("ped", estPed);
+    contenu.innerHTML = estPed ? (z.htmlPed || "") : (z.html || "");
+    entete.hidden = !z.pediatrie;
+    if (z.pediatrie) {
+      chk.checked = estPed;
+      rond.textContent = estPed ? "👶" : "🧑";
+      // Le bouton reste du côté interne de la bulle (face à l'image)
+      entete.style.justifyContent = posFige.aGauche ? "flex-end" : "flex-start";
+    }
+  }
+
+  function repositionner() {
+    var w = bulle.offsetWidth;
+    var left = posFige.aGauche ? posFige.r.left - w - posFige.marge : posFige.r.right + posFige.marge;
+    left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+    bulle.style.left = left + "px";
+    bulle.style.top = posFige.top + "px";
+  }
+
+  function ouvrir(i) {
+    var z = zones[i];
+    if (!z.html) { fermer(); return; }
+    indexOuvert = i;
+    pedActif = false;
+
+    var r = stage.getBoundingClientRect();
+    var marge = 12;
+    var cx = r.left + (z.x + z.w / 2) * r.width;
+    var cy = r.top + (z.y + z.h / 2) * r.height;
+    var aGauche = cx < r.left + r.width / 2;
+    posFige = { r: r, marge: marge, aGauche: aGauche, top: 0 };
+
+    bulle.hidden = false;
+    rendre();
+
+    var place = aGauche ? r.left - marge * 2 : window.innerWidth - r.right - marge * 2;
+    bulle.style.maxWidth = Math.max(180, Math.min(360, place)) + "px";
+    var w = bulle.offsetWidth, h = bulle.offsetHeight;
+    var left = aGauche ? r.left - w - marge : r.right + marge;
+    left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+    var top = Math.max(8, Math.min(cy - h / 2, window.innerHeight - h - 8));
+    bulle.style.left = left + "px";
+    bulle.style.top = top + "px";
+    posFige.top = top;
+  }
+
+  chk.addEventListener("change", function () {
+    if (indexOuvert < 0) { return; }
+    pedActif = chk.checked;
+    rendre();
+    repositionner();
+  });
+
+  document.addEventListener("click", function (e) {
+    var z = e.target.closest(".zone");
+    if (z) { ouvrir(Number(z.dataset.i)); return; }
+    if (bulle.contains(e.target)) { return; }
+    fermer();
+  });
+  window.addEventListener("resize", fermer);
+  window.addEventListener("scroll", fermer);
+})();
+</script>
+</body>
+</html>
